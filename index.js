@@ -16,6 +16,8 @@ function mR(opts) {
     var self = this;
     EVENTEMITTER.call(self);
 
+    self.opts = opts;
+
     // Start watching
     self._watch();
 }
@@ -43,7 +45,7 @@ mR.prototype._watch = function(cbReload, cbTerminate) {
 
     process.on('SIGUSR2', self.reload.bind(self));
 
-    process.on('SIGTERM', self.stop.bind(self));
+    // process.on('SIGTERM', self.stop.bind(self));
 
     /* Watch this file for reload */
     FS.watchFile(restartFile, self.reload.bind(self));
