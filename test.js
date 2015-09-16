@@ -2,16 +2,10 @@ var MINRELOAD = require('./index.js');
 
 console.log("PID - ", process.pid);
 
-// var opts = {
+var opts = {
 
-//     'RESTARTFILE' : './public/system/restart',
-
-//     'RELOAD_ON_SIGUSR2'    : ,
-
-//     'RELOADSIGNALS' : ['SIGUSR2'],
-//     'STOPSIGNALS'   : ['SIGTERM']
-
-// };
+    "pidfile" : "//Users/shrey/testpid.pid",
+};
 
 var m = new MINRELOAD(opts);
 

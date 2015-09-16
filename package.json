@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/paytm/minreload/issues"
   },
-  "homepage": "https://github.com/paytm/minreload"
+  "homepage": "https://github.com/paytm/minreload",
+  "dependencies": {
+    "lodash": "~3.10.1"
+  }
 }

@@ -4,6 +4,7 @@
 
 var
     /* NODE internal */
+    _                   = require('lodash'),
     FS                  = require('fs'),
     UTIL                = require('util'),
     EVENTEMITTER        = require('events').EventEmitter,
@@ -16,10 +17,16 @@ function mR(opts) {
     var self = this;
     EVENTEMITTER.call(self);
 
+    if(opts === undefined) opts = {};
     self.opts = opts;
 
     // Start watching
     self._watch();
+
+    //Write pid file
+    if(_.get(opts, 'pidfile', null)) {
+        FS.writeFileSync(_.get(opts, 'pidfile'), process.pid);
+    }
 }
 
 /* Called when we need to reload the app */
@@ -43,9 +50,9 @@ mR.prototype._watch = function(cbReload, cbTerminate) {
         self        = this,
         restartFile = process.env.RESTARTFILE || './public/system/restart';
 
-    process.on('SIGUSR2', self.reload.bind(self));
+    process.on('SIGUSR1', self.reload.bind(self));
 
-    // process.on('SIGTERM', self.stop.bind(self));
+    process.on('SIGUSR2', self.stop.bind(self));
 
     /* Watch this file for reload */
     FS.watchFile(restartFile, self.reload.bind(self));
