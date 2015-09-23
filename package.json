@@ -1,6 +1,6 @@
 {
   "name": "minreload",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Minimum reload for nodejs apps",
   "main": "index.js",
   "scripts": {
