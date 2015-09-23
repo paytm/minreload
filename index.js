@@ -50,9 +50,15 @@ mR.prototype._watch = function(cbReload, cbTerminate) {
         self        = this,
         restartFile = process.env.RESTARTFILE || './public/system/restart';
 
-    process.on('SIGUSR1', self.reload.bind(self));
+    process.on('SIGUSR2', self.reload.bind(self));
 
-    process.on('SIGUSR2', self.stop.bind(self));
+    /* As mentioned in https://nodejs.org/api/process.html#process_signal_events
+
+        SIGUSR1 is reserved by Node.js to start the debugger. It's possible to install a listener but that won't stop the debugger from starting.
+
+        Hence we use SIGUSR1 for STOPPING
+    */
+    process.on('SIGUSR1', self.stop.bind(self));
 
     /* Watch this file for reload */
     FS.watchFile(restartFile, self.reload.bind(self));
